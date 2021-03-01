@@ -238,7 +238,7 @@ var theaters = L.geoJson(null, {
   },
   onEachFeature: function (feature, layer) {
     if (feature.properties) {
-      var content = "<table class='table table-striped table-bordered table-condensed'>" + "<tr><th>Name</th><td>" + feature.properties.name + "</td></tr>" + "<tr><th>ID</th><td>" + feature.properties.id + "</td></tr>" + "<tr><th>Latitude</th><td>" + feature.properties.lat + "</td></tr>" + "<tr><th>Longitude</th><td>" + feature.properties.lon + "</td></tr>" + "<table>";
+      var content = "<table class='table table-striped table-bordered table-condensed'>" + "<tr><th>Name</th><td>" + feature.properties.name + "</td></tr>" + "<tr><th>ID</th><td>" + feature.properties.id + "</td></tr>" + "<tr><th>Latitude</th><td>" + feature.properties.lat + "</td></tr>" + "<tr><th>Longitude</th><td>" + feature.properties.lon + "</td></tr>" + "<tr><th>Vaccinated</th><td>" + feature.properties.vaccinated + "</td></tr>" + "<table>";
       layer.on({
         click: function (e) {
           $("#feature-title").html(feature.properties.NAME);
