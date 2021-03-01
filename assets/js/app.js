@@ -95,7 +95,7 @@ function syncSidebar() {
   theaters.eachLayer(function (layer) {
     if (map.hasLayer(theaterLayer)) {
       if (map.getBounds().contains(layer.getLatLng())) {
-        $("#feature-list tbody").append('<tr class="feature-row" id="' + L.stamp(layer) + '" lat="' + layer.getLatLng().lat + '" lng="' + layer.getLatLng().lng + '"><td style="vertical-align: middle;"><img width="16" height="18" src="assets/img/theater.png"></td><td class="feature-name">' + layer.feature.properties.NAME + '</td><td style="vertical-align: middle;"><i class="fa fa-chevron-right pull-right"></i></td></tr>');
+        $("#feature-list tbody").append('<tr class="feature-row" id="' + L.stamp(layer) + '" lat="' + layer.getLatLng().lat + '" lng="' + layer.getLatLng().lng + '"><td style="vertical-align: middle;"><img width="25" height="25" src="assets/img/vaccine_logo.png"></td><td class="feature-name">' + layer.feature.properties.name + '</td><td style="vertical-align: middle;"><i class="fa fa-chevron-right pull-right"></i></td></tr>');
       }
     }
   });
@@ -181,10 +181,10 @@ var subwayLines = L.geoJson(null, {
   },
   onEachFeature: function (feature, layer) {
     if (feature.properties) {
-      var content = "<table class='table table-striped table-bordered table-condensed'>" + "<tr><th>Division</th><td>" + feature.properties.Division + "</td></tr>" + "<tr><th>Line</th><td>" + feature.properties.Line + "</td></tr>" + "<table>";
+      var content = "<table class='table table-striped table-bordered table-condensed'>" + "<tr><th>ID</th><td>" + feature.properties.id + "</td></tr>" + "<tr><th>Latitude</th><td>" + feature.properties.lat + "</td></tr>"+ "<tr><th>Longitude</th><td>" + feature.properties.lon + "</td></tr>" + "<table>";
       layer.on({
         click: function (e) {
-          $("#feature-title").html(feature.properties.Line);
+          $("#feature-title").html(feature.properties.name);
           $("#feature-info").html(content);
           $("#featureModal").modal("show");
 
@@ -209,7 +209,7 @@ var subwayLines = L.geoJson(null, {
     });
   }
 });
-$.getJSON("http://giv-project15.uni-muenster.de:8080/geoserver/ifgi/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=ifgi%3Avaccination_centres&maxFeatures=500&outputFormat=application%2Fjson", function (data) {
+$.getJSON(null, function (data) {
   subwayLines.addData(data);
 });
 
@@ -227,8 +227,8 @@ var theaters = L.geoJson(null, {
   pointToLayer: function (feature, latlng) {
     return L.marker(latlng, {
       icon: L.icon({
-        iconUrl: "assets/img/theater.png",
-        iconSize: [24, 28],
+        iconUrl: "assets/img/vaccine_logo.png",
+        iconSize: [32, 32],
         iconAnchor: [12, 28],
         popupAnchor: [0, -25]
       }),
@@ -238,7 +238,7 @@ var theaters = L.geoJson(null, {
   },
   onEachFeature: function (feature, layer) {
     if (feature.properties) {
-      var content = "<table class='table table-striped table-bordered table-condensed'>" + "<tr><th>Name</th><td>" + feature.properties.NAME + "</td></tr>" + "<tr><th>Phone</th><td>" + feature.properties.TEL + "</td></tr>" + "<tr><th>Address</th><td>" + feature.properties.ADDRESS1 + "</td></tr>" + "<tr><th>Website</th><td><a class='url-break' href='" + feature.properties.URL + "' target='_blank'>" + feature.properties.URL + "</a></td></tr>" + "<table>";
+      var content = "<table class='table table-striped table-bordered table-condensed'>" + "<tr><th>Name</th><td>" + feature.properties.name + "</td></tr>" + "<tr><th>ID</th><td>" + feature.properties.id + "</td></tr>" + "<tr><th>Latitude</th><td>" + feature.properties.lat + "</td></tr>" + "<tr><th>Longitude</th><td>" + feature.properties.lon + "</td></tr>" + "<table>";
       layer.on({
         click: function (e) {
           $("#feature-title").html(feature.properties.NAME);
@@ -259,7 +259,7 @@ var theaters = L.geoJson(null, {
     }
   }
 });
-$.getJSON("data/DOITT_THEATER_01_13SEPT2010.geojson", function (data) {
+$.getJSON("http://giv-project15.uni-muenster.de:8080/geoserver/ifgi/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=ifgi%3Avaccination_centres&maxFeatures=500&outputFormat=application%2Fjson", function (data) {
   theaters.addData(data);
   map.addLayer(theaterLayer);
 });
@@ -417,13 +417,13 @@ var baseLayers = {
 };
 
 var groupedOverlays = {
-  "Doctor's  Office": {
-    "<img src='assets/img/doctor.png' width='24' height='28'>&nbsp;Doctors": theaterLayer,
+  "Point of Interest": {
+    "<img src='assets/img/vaccine_logo.png' width='28' height='28'>&nbsp;Vaccination Centers": theaterLayer,
     //"<img src='assets/img/museum.png' width='24' height='28'>&nbsp;Museums": museumLayer
   },
   "Reference": {
     "Districts": boroughs,
-    "Vaccination Centres": subwayLines
+    //"Vaccination Centers": subwayLines
   }
 };
 
